@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
+{% load pages_tags mezzanine_tags i18n staticfiles %}
+
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
+<meta name="description" content="{% block meta_description %}{% endblock %}">
+<title>{% block meta_title %}{% endblock %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %}</title>
+<link rel="shortcut icon" href="{% static "img/favicon.ico" %}">
+
+{% ifinstalled mezzanine.blog %}
+<link rel="alternate" type="application/rss+xml" title="RSS" href="{% url "blog_post_feed" "rss" %}">
+<link rel="alternate" type="application/atom+xml" title="Atom" href="{% url "blog_post_feed" "atom" %}">
+{% endifinstalled %}
+
+{% compress css %}
+<!-- Bootstrap core CSS -->
+<link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<!-- Custom styles for this template -->
+<link href="{% static "css/jquery.bxslider.css" %}" rel="stylesheet">
+<link href="{% static "css/style.css" %}" rel="stylesheet">
+
+
+
+{% if LANGUAGE_BIDI %}
+<link rel="stylesheet" href="{% static "css/bootstrap-rtl.css" %}">
+{% endif %}
+{% ifinstalled cartridge.shop %}
+<link rel="stylesheet" href="{% static "css/cartridge.css" %}">
+{% if LANGUAGE_BIDI %}
+<link rel="stylesheet" href="{% static "css/cartridge.rtl.css" %}">
+{% endif %}
+{% endifinstalled %}
+{% block extra_css %}{% endblock %}
+{% endcompress %}
+
+{% compress js %}
+
+{% block extra_js %}{% endblock %}
+{% endcompress %}
+
+<!--[if lt IE 9]>
+<script src="{% static "js/html5shiv.js" %}"></script>
+<script src="{% static "js/respond.min.js" %}"></script>
+<![endif]-->
+
+{% block extra_head %}{% endblock %}
+</head>
+
+<body id="{% block body_id %}body{% endblock %}">
+    <!-- Navigation -->
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                        {% block navbar_title %}
+                        {% if settings.SITE_TITLE %}<a class="navbar-brand" href="/">{{ settings.SITE_TITLE }}</a>{% endif %}
+                        {% if settings.SITE_TAGLINE %}<p class="navbar-text visible-lg">{{ settings.SITE_TAGLINE }}</p>{% endif %}
+                        {% endblock%}
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                   <!-- <div id="navbar" class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="index.html">Home</a></li>
+                            <li><a href="#about">Lifestyle</a></li>
+                            <li><a href="#contact">Travel</a></li>
+                            <li><a href="#contact">Fashion</a></li>
+                            <li><a href="about.html">About Me</a></li>
+                            <li><a href="about.html">Contact</a></li>
+                        </ul>
+    
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                            <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                            <li><a href="#"><i class="fa fa-reddit"></i></a></li>
+                        </ul>
+    
+                    </div>-->
+                    <!--/.nav-collapse -->
+                    <div id="navbar" class="collapse navbar-collapse">
+                            
+                                {% block navbar_dropdown_menu %}{% page_menu "pages/menus/dropdown.html" %}{% endblock%}
+                                    
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li><a href="https://www.facebook.com/vincent.obodoma"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="https://twitter.com/vingeophysicist"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="https://www.instagram.com/sirvinprogramming/?hl=en"><i class="fa fa-instagram"></i></a></li>
+                                    <li><a href="https://www.youtube.com/channel/UCRF7Ue8ghpKRXUqVKf3N17w"><i class="fa fa-youtube"></i></a></li>
+                                    <li><a href="https://github.com/vingeophysicist"><i class="fa fa-github"></i></a></li>
+                                    <li><a href="https://www.linkedin.com/in/vincent-obodoma-3353b9114/"><i class="fa fa-linkedin"></i></a></li>
+                                </ul>
+                     </div>  
+
+                </div>
+            </nav>
+
+
+{% block title %}{% endblock %}
+
+
+
+
+
+{% block main %}{% endblock %}
+
+<footer class="footer">
+
+    <div class="footer-socials">
+        <a href="https://www.facebook.com/vincent.obodoma"><i class="fa fa-facebook"></i></a>
+        <a href="https://twitter.com/vingeophysicist"><i class="fa fa-twitter"></i></a>
+        <a href="https://www.instagram.com/sirvinprogramming/?hl=en"><i class="fa fa-instagram"></i></a>
+        <a href="https://www.youtube.com/channel/UCRF7Ue8ghpKRXUqVKf3N17w"><i class="fa fa-youtube"></i></a>
+        <a href="#"><i class="fa fa-github"></i></a>
+        <a href="#"><i class="fa fa-reddit"></i></a>
+    </div>
+
+    <div class="footer-bottom">
+        <i class="fa fa-copyright"></i> Copyright 2019. All rights reserved.<br>
+        Theme made by <a href="http://www.moozthemes.com">Vintech</a>
+    </div>
+</footer>
+
+{% block footer_js %}
+{% include "includes/footer_scripts.html" %}
+<!-- Bootstrap core JavaScript
+			================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="{% static "js/bootstrap.min.js" %}"></script>
+		<script src="{% static "js/jquery.bxslider.js" %}"></script>
+		<script src="{% static "js/mooz.scripts.min.js" %}"></script>
+{% endblock %}
+
+</body>
+</html>
