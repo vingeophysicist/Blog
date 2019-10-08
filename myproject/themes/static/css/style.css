@@ -74,7 +74,7 @@ section:last-child {
 }
 header {
 	margin: 130px 0 65px;
-	text-align: center;
+	text-align: center; 
 }
 /*- BX Slaider reset -*/
 .bxslider {

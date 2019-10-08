@@ -1,0 +1,231 @@
+{% extends "blog/blog_post_list.html" %}
+{% load mezzanine_tags comment_tags keyword_tags rating_tags i18n disqus_tags %}
+{% load i18n mezzanine_tags blog_tags keyword_tags disqus_tags %}
+
+
+
+{% block meta_title %}{{ blog_post.meta_title }}{% endblock %}
+
+{% block meta_keywords %}{% metablock %}
+{% keywords_for blog_post as tags %}
+{% for tag in tags %}{% if not forloop.first %}, {% endif %}{{ tag }}{% endfor %}
+{% endmetablock %}{% endblock %}
+
+{% block meta_description %}{% metablock %}
+{{ blog_post.description }}
+{% endmetablock %}{% endblock %}
+
+
+
+{% block main %}
+<div class="container">
+    
+    <section>
+            
+     <div class="row">
+            <div class="col-md-8">
+                <article class="blog-post">
+                    <div class="blog-post-image">
+                        <a href="post.html"><img src="images/750x500-5.jpg" alt=""></a>
+                    </div>
+                    <div class="blog-post-body">
+                        <h2><a href="{{ blog_post.get_absolute_url }}">{{ blog_post.title }}</a></h2>
+                        <div class="post-meta"><span>by {% with blog_post.user as author %}<a href="{% url "blog_post_list_author" author %}">{{ author.get_full_name|default:author.username }}
+                        </a>
+                        {% endwith %}
+
+                        </span>/<span><i class="fa fa-clock-o"></i> {% blocktrans with sometime=blog_post.publish_date %}{{ sometime }} {% endblocktrans %}
+                        </span>/<span><i class="fa fa-comment-o"></i> <a href="#">{% if blog_post.allow_comments %}
+                                {% if settings.COMMENTS_DISQUS_SHORTNAME %}
+                                    (<a href="{{ blog_post.get_absolute_url }}#disqus_thread"
+                                        data-disqus-identifier="{% disqus_id_for blog_post %}">{% spaceless %}
+                                        {% trans "Comments" %}
+                                    {% endspaceless %}</a>)
+                                {% else %}(<a href="#comments">{% spaceless %}
+                                    {% blocktrans count comments_count=blog_post.comments_count %}{{ comments_count }} comment{% plural %}{{ comments_count }} comments{% endblocktrans %}
+                                    {% endspaceless %}</a>)
+                                {% endif %}
+                            {% endif %}
+                        </a></span></div>
+                        <div class="blog-post-text">
+                                {% block blog_post_detail_featured_image %}
+                                {% if settings.BLOG_USE_FEATURED_IMAGE and blog_post.featured_image %}
+                                <p><img class="img-responsive" src="{{ MEDIA_URL }}{% thumbnail blog_post.featured_image 750 400 %}"></p>
+                                {% endif %}
+                                {% endblock %}
+                                
+
+                            <p>{% block blog_post_detail_content %}
+                                    {% editable blog_post.content %}
+                                    {{ blog_post.content|richtext_filters }}
+                                    {% endeditable %}
+                                    {% endblock %}
+                            </p>
+                            {% block blog_post_detail_related_posts %}
+                            {% if related_posts %}
+                            <div id="related-posts">
+                            <h3>{% trans 'Related posts' %}</h3>
+                            <ul class="list-unstyled">
+                            {% for post in related_posts %}
+                            <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
+                            {% endfor %}
+                            </ul>
+                            </div>
+                            {% endif %}
+                            {% endblock %}
+
+                            {% load twitter_tags %}
+
+
+                            {% block blog_post_detail_sharebuttons %}
+                            {% set_short_url_for blog_post %}
+
+                            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                            
+                            <iframe src="https://www.facebook.com/plugins/share_button.php?href={{ request.build_absolute_uri }}https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&layout=button&size=small&width=59&height=20&appId
+                            " width="59" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+                            {% endblock %}
+                            
+                        </div>
+
+                    </div>
+                </article>
+                {% block blog_post_detail_comments %}
+                {% if blog_post.allow_comments %}{% comments_for blog_post %}{% endif %}
+                {% endblock %}
+                
+            </div>
+            <div class="col-md-4 sidebar-gutter">
+                <aside>
+                    <div class="sidebar-widget">
+                        {% block blog_recent_posts %}
+                        {% blog_recent_posts 5 as recent_posts %}
+                        {% if recent_posts %}
+                    <h3 class="sidebar-title">Featured Posts</h3>
+                    <div class="widget-container">
+                            {% for recent_post in recent_posts %}
+        
+                        <article class="widget-post">
+                            <div class="post-image">
+                                <a href="{{ recent_post.get_absolute_url }}">{% if settings.BLOG_USE_FEATURED_IMAGE and recent_post.featured_image %}
+                                        <img src="{{ MEDIA_URL }}{% thumbnail recent_post.featured_image 70 40 %}">
+                                        {% endif %}
+                                </a>
+        
+                            </div>
+                            <div class="post-body">
+                                <h2><a href="{{ recent_post.get_absolute_url }}"> {{ recent_post.title }}</a></h2>
+                                <div class="post-meta">
+                                        
+                                    <span><i class="fa fa-clock-o"></i></span> <span><a href="post.html"><i class="fa fa-comment-o"></i> </a></span>
+        
+        
+                                </div>
+                            </div>
+                        </article>
+                        {% endfor %}
+        
+                    </div>
+                    {% endif %}
+                    {% endblock %}
+                </div>                
+                <!-- sidebar-widget -->
+                <div class="sidebar-widget">
+                    <h3 class="sidebar-title">Socials</h3>
+                    <div class="widget-container">
+                        <div class="widget-socials">
+                            <a href="https://www.facebook.com/vincent.obodoma"><i class="fa fa-facebook-square" title="facebook"></i></a>
+                    <a href="https://twitter.com/vingeophysicist"><i class="fa fa-twitter-square" title="twitter"></i></a>
+                    <a href="https://www.instagram.com/sirvinprogramming/"><i class="fa fa-instagram" title="instagram" ></i></a>
+                    <a href="https://www.youtube.com/channel/UCRF7Ue8ghpKRXUqVKf3N17w?view_as=subscriber"><i class="fa fa-youtube-square" title="youtube"></i></a>
+                    <a href="https://github.com/vingeophysicist"><i class="fa fa-github-square" title="github"></i></a>
+                    <a href="https://www.linkedin.com/in/vincent-obodoma-3353b9114/"><i class="fa fa-linkedin-square" title="linkiden"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- sidebar-widget -->
+                <div class="sidebar-widget">
+                    <h3 class="sidebar-title">Grouping</h3>
+                    <div class="widget-container">
+
+                        <ul>
+                                {% blog_categories as categories %}
+                                {% if categories %}
+                                {% for category in categories %}
+                                <li>
+                                    <a href="{% url "blog_post_list_category" category.slug %}"
+                                    >{{ category }}
+                                    </a> ({{ category.post_count }})                   
+                                </li>
+                                {% endfor %}
+                                {% endif %}
+                       
+                        </ul>
+                    </div>
+                    <div class="sidebar-widget">
+                        <h3 class="sidebar-title">ARCHIVES</h3>
+                        <div class="widget-container">
+                        {% block blog_months %}
+                        {% blog_months as months %}
+                        {% if months %}
+                                
+                        <ul>
+                                {% for month in months %}
+                                {% ifchanged month.date.year %}
+                                {% if not forloop.first %}</ul>{% endif %}
+                                <h6>{{ month.date.year }}</h6><ul class="list-unstyled">
+                                        {% endifchanged %} 
+                                
+                            <li>
+                                <a href="{% url "blog_post_list_month" year=month.date.year month=month.date.month %}"
+                                >{{ month.date|date:"F" }}
+                                </a> ({{ month.post_count }})
+                                {% endfor %}
+                          
+                            </li>
+                            {% endif %}
+                            {% endblock %}
+        
+                        </ul>
+                    </div>
+                </div>
+                </div>
+                </aside>
+
+            </div>
+        </div>
+       
+
+    </section>
+
+    </div><!-- /.container -->
+
+
+
+
+
+{% if settings.COMMENTS_DISQUS_SHORTNAME %}
+{% include "generic/includes/disqus_counts.html" %}
+{% endif %}
+
+
+{% block blog_post_detail_keywords %}
+{% keywords_for blog_post as tags %}
+{% if tags %}
+{% spaceless %}
+<ul class="list-inline tags">
+    <li>{% trans "Tags" %}:</li>
+    {% for tag in tags %}
+    <li><a href="{% url "blog_post_list_tag" tag.slug %}">{{ tag }}</a>{% if not forloop.last %}, {% endif %}</li>
+    {% endfor %}
+</ul>
+{% endspaceless %}
+{% endif %}
+{% endblock %}
+
+
+
+
+
+
+{% endblock %}

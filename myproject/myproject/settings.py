@@ -19,12 +19,12 @@ from django.utils.translation import ugettext_lazy as _
 
 # Controls the ordering and grouping of the admin menu.
 #
-# ADMIN_MENU_ORDER = (
-#     ("Content", ("pages.Page", "blog.BlogPost",
-#        "generic.ThreadedComment", (_("Media Library"), "media-library"),)),
-#     ("Site", ("sites.Site", "redirects.Redirect", "conf.Setting")),
-#     ("Users", ("auth.User", "auth.Group",)),
-# )
+ADMIN_MENU_ORDER = (
+     ("Content", ("pages.Page", "blog.BlogPost", "blog.BlogCategory",
+        "generic.ThreadedComment", (_("Media Library"), "media-library"),)),
+     ("Site", ("sites.Site", "redirects.Redirect", "conf.Setting")),
+     ("Users", ("auth.User", "auth.Group",)),
+ )
 
 # A three item sequence, each containing a sequence of template tags
 # used to render the admin dashboard.
@@ -79,7 +79,7 @@ from django.utils.translation import ugettext_lazy as _
 
 # Setting to turn on featured images for blog posts. Defaults to False.
 #
-# BLOG_USE_FEATURED_IMAGE = True
+BLOG_USE_FEATURED_IMAGE = True
 
 # If True, the django-modeltranslation will be added to the
 # INSTALLED_APPS setting.
@@ -151,7 +151,7 @@ DATABASES = {
         # Not used with sqlite3.
         "PASSWORD": "jambwaec",
         # Set to empty string for localhost. Not used with sqlite3.
-        "HOST": "127.0.0.1.8000",
+        "HOST": "127.0.0.1",
         # Set to empty string for default. Not used with sqlite3.
         "PORT": "5432",
     }
@@ -341,3 +341,9 @@ except ImportError:
     pass
 else:
     set_dynamic_settings(globals())
+###################
+# CUSTOMS SETTINGS #
+####################
+BLOG_SLUG = " "
+COMMENTS_USE_RATINGS = False
+featured_image = True

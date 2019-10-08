@@ -1,0 +1,38 @@
+#comment.control-label {
+    opacity: 1;
+    font-size: 1px;
+
+}
+#comment{
+    border:0.5px solid whites;
+    padding : 5px;
+    border-radius: 10px;
+    background: none repeat scroll 0 0 rgba(198, 198, 198, 0.479);
+    border: 2px solid #8B8B8B;
+    -moz-border-radius: 10px;
+    -op-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    margin-bottom: 10%;
+    
+}
+#comment input, #comment textarea{
+    
+    border:solid 1px #aacfe4;
+    width:100%;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -op-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    font-size: 14px;
+}
+
+ #comment label{
+    font-family:'Courier New', Courier, monospace;
+}
+    
+
+.logo {
+    margin-top: 0%;
+    margin-bottom:0%;
+
+}
