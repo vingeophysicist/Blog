@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 {% load mezzanine_tags keyword_tags %}
+{% load i18n mezzanine_tags blog_tags keyword_tags disqus_tags %}
+{% load mezzanine_tags comment_tags keyword_tags rating_tags i18n disqus_tags %}
+
+
 
 {% block meta_title %}{{ page.meta_title }}{% endblock %}
 
@@ -19,46 +23,8 @@
 {% endblock %}
 
 {% block main %}
-{% if request.path == '/vincent/' %}
-<div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <article class="blog-post">
-                    <div class="blog-post-body">
-                        <h2><a href="post.html">About Author</a></h2>
-                        <div class="blog-post-text">
-                                <h4>{{ page.quotes.title }}</h4>
-                                <p>{{ page.quotes.quotes_text }}</p>
-                                <div class="sidebar-widget">
-                                    <h3 class="sidebar-title">QUOTES</h3>
-                                    {% load pages_tags %}
-                        
-                                    <div class="widget-container widget-about">
-                                            {% for Detail_quotes in page.quotes.Detail_quotes_set.all %}
-                                            <img src="{{ MEDIA_URL }}{{ Detail_quotes.quotes_pics }}" alt="">
-                                            {% endfor %}
-                        
-                                        <h4>{{ page.quotes.title }}</h4>
-                                        <p>{{ page.quotes.quotes_text }}</p>
-                                    </div>
-                                </div>
-                        
 
 
-                            <p>My name is vincent obodoma, you can call me sir vin. I am a graduate of Applied Geophysics and a  python developer with a 1 year plus experience. I    </p>
+    
 
-                            <p>“The traditional methods used by researchers to analyze the relationship between the activities of neurons were adopted from physics,” said Carina Curto, associate professor of mathematics at Penn State, “but neuroscience data doesn’t necessarily play by the same rules as data from physics, so we need new tools. Our method is a first step toward developing a new mathematical toolkit to uncover the structure of neural circuits with unknown function in the brain.”</p>
-
-                            <h3>Math reveals structure in neural activity in the brain</h3>
-                            <p>The method — clique topology — was developed by an interdisciplinary team of researchers at Penn State, the University of Pennsylvania, the Howard Hughes Medical Institute, and the University of Nebraska-Lincoln. The method is described in a paper that will be posted in the early online edition of the journal Proceedings of the National Academy of Sciences during the week ending October 23, 2015.</p>
-
-                            <p>“We have adopted approaches from the field of algebraic topology that previously had been used primarily in the domain of pure mathematics and have applied them to experimental data on the activity of place cells — specialized neurons in the part of the brain called the hippocampus that sense the position of an animal in its environment,” said Curto.</p>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </div>
-        
-    </div><!-- /.container -->
-{% endif %}
 {% endblock %}

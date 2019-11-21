@@ -4,7 +4,7 @@
 
 {% block meta_title %}{% if page %}{{ page.meta_title }}{% else %}{% trans "edublogspot" %}{% endif %}{% endblock %}
 
-{% block meta_keywords %}{% metablock %}
+{% block meta_keywords %} {% metablock %}
 {% keywords_for page as keywords %}
 {% for keyword in keywords %}
     {% if not forloop.first %}, {% endif %}
@@ -44,33 +44,6 @@
 
 {% block main %}
 
-{% if tag or category or year or month or author %}
-    {% block blog_post_list_filterinfo %}
-    <p>
-    {% if tag %}
-        {% trans "Viewing posts tagged" %} {{ tag }}
-    {% else %}{% if category %}
-        {% trans "Viewing posts for the category" %} {{ category }}
-    {% else %}{% if year or month %}
-        {% trans "Viewing posts from" %} {% if month %}{{ month }}, {% endif %}
-        {{ year }}
-    {% else %}{% if author %}
-        {% trans "Viewing posts by" %}
-        {{ author.get_full_name|default:author.username }}
-    {% endif %}{% endif %}{% endif %}{% endif %}
-    {% endblock %}
-    </p>
-{% else %}
-    {% if page %}
-    {% block blog_post_list_pagecontent %}
-    {% if page.get_content_model.content %}
-        {% editable page.get_content_model.content %}
-        {{ page.get_content_model.content|richtext_filters }}
-        {% endeditable %}
-    {% endif %}
-    {% endblock %}
-    {% endif %}
-{% endif %}
 <div class="container">
     
     <section class="main-slider">
